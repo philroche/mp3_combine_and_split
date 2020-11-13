@@ -2,6 +2,11 @@
 History
 =======
 
+0.0.7 (2020-11-13)
+------------------
+
+* handle mp3 tag data not suitable as a filename eg. has slash in artist string
+
 0.0.6 (2020-11-13)
 ------------------
 

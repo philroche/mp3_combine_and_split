@@ -8,6 +8,7 @@ import natsort
 from os import listdir
 from os.path import isfile, join
 from pydub import AudioSegment
+from slugify import slugify
 
 
 class MP3CombineAndSplit(object):
@@ -53,9 +54,10 @@ class MP3CombineAndSplit(object):
 
         for i, chunk in enumerate(combined_mp3[:: self.duration_miliseconds]):
             split_mp3_track_num = i + 1
+            split_mp3_filename = slugify(f"{self.artist}-{self.album}-{split_mp3_track_num}")
             split_mp3_path = join(
                 self.out_directory,
-                f"{self.artist}-{self.album}-{split_mp3_track_num}.mp3",
+                f"{split_mp3_filename}.mp3"
             )
             with open(split_mp3_path, "wb") as split_mp3:
                 chunk.export(

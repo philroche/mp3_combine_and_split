@@ -6,32 +6,21 @@ import pytest
 
 from click.testing import CliRunner
 
-from mp3_combine_and_split import mp3_combine_and_split
+from slugify import slugify
 from mp3_combine_and_split import cli
 
 
-@pytest.fixture
-def response():
-    """Sample pytest fixture.
-
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
-
-
-def test_content(response):
+def test_safe_filename():
     """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
+    sample_filename = "Roald Dahl/Stephen Mangan/Tamsin Greig-Revolting Rhymes & Dirty Beasts-1"
+    safe_sample_filename = slugify(sample_filename)
+    assert safe_sample_filename == "roald-dahl-stephen-mangan-tamsin-greig-revolting-rhymes-dirty-beasts-1"
 
 
 def test_command_line_interface():
     """Test the CLI."""
     runner = CliRunner()
-    result = runner.invoke(cli.main)
-    assert result.exit_code == 0
-    assert "mp3_combine_and_split.cli.main" in result.output
     help_result = runner.invoke(cli.main, ["--help"])
     assert help_result.exit_code == 0
-    assert "--help  Show this message and exit." in help_result.output
+    assert "--help" in help_result.output
+    assert "Show this message and exit." in help_result.output
