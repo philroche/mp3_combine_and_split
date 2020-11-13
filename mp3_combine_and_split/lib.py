@@ -67,7 +67,7 @@ class MP3CombineAndSplit(object):
                         "tracknum": split_mp3_track_num,
                     },
                 )
-                split_mp3s.append(split_mp3)
+                split_mp3s.append(split_mp3_path)
         return split_mp3s
 
     def find_mp3_files_in_input_directory(self):
@@ -81,13 +81,9 @@ class MP3CombineAndSplit(object):
                 if mime_type in MP3_MIME_TYPES:
                     sort_order_index = sort_order_index + 1
                     mp3_file_object = eyed3.load(file_path)
-                    try:
-                        mp3_file_object_track_num = mp3_file_object.tag.track_num
-                    except AttributeError:
-                        print(
-                            f"{file_path} does not have a valid track number - using sort order index {sort_order_index} instead"
-                        )
-                        mp3_file_object_track_num = (sort_order_index, None)
+                    # using sort order index as track number can't be relied
+                    # upon especially if multiple albums in the same directory"
+                    mp3_file_object_track_num = sort_order_index
 
                     try:
                         self.album = mp3_file_object.tag.album

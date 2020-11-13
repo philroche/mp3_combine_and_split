@@ -2,6 +2,11 @@
 History
 =======
 
+0.0.6 (2020-11-13)
+------------------
+
+* use sort order index as track number can't be relied upon especially if multiple albums in the same directory
+
 0.0.5 (2020-11-13)
 ------------------
 
